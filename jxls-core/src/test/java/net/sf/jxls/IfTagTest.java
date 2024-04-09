@@ -1,6 +1,5 @@
 package net.sf.jxls;
 
-import junit.framework.TestCase;
 import net.sf.jxls.bean.SimpleBean;
 import net.sf.jxls.exception.ParsePropertyException;
 import net.sf.jxls.transformer.XLSTransformer;
@@ -21,7 +20,7 @@ import java.util.Map;
  * @author Leonid Vysochyn
  *         Date: 09.04.2010
  */
-public class IfTagTest extends TestCase {
+public class IfTagTest {
     protected final Log log = LogFactory.getLog(getClass());
 
     public static final String ifTagEmptyXLS = "/templates/iftagempty.xls";

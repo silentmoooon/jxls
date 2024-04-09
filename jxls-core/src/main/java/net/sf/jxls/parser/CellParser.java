@@ -10,6 +10,7 @@ import net.sf.jxls.transformer.Row;
 import net.sf.jxls.util.Util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.xml.sax.SAXException;
 
@@ -51,7 +52,7 @@ public class CellParser {
         org.apache.poi.ss.usermodel.Cell c = cell.getPoiCell();
         if (c != null) {
             try {
-                if( c.getCellType() == org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING ){
+                if( c.getCellType() == CellType.STRING ){
                     cell.setPoiCellValue(c.getRichStringCellValue().getString());
                     parseCellValue( beans);
                 }
@@ -65,7 +66,7 @@ public class CellParser {
     }
 
     public Formula parseCellFormula(){
-        if( cell.getPoiCell() != null && (cell.getPoiCell().getCellType() == org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING)) {
+        if( cell.getPoiCell() != null && (cell.getPoiCell().getCellType() == CellType.STRING)) {
             cell.setPoiCellValue( cell.getPoiCell().getRichStringCellValue().getString() );
             if( cell.getPoiCellValue().startsWith(configuration.getStartFormulaToken()) && cell.getPoiCellValue().lastIndexOf(configuration.getEndFormulaToken()) > 0 ){
                 parseFormula();
@@ -217,7 +218,7 @@ public class CellParser {
         if( hssfRow!=null ){
             for(int j = (cell.getPoiCell().getColumnIndex() + 1); j <= hssfRow.getLastCellNum(); j++){
                 org.apache.poi.ss.usermodel.Cell hssfCell = hssfRow.getCell( j );
-                if( hssfCell != null && hssfCell.getCellType() == org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING ){
+                if( hssfCell != null && hssfCell.getCellType() == CellType.STRING ){
                     String cellValue = hssfCell.getRichStringCellValue().getString();
                     if( cellValue.matches("<" + configuration.getTagPrefix() + tagName + "\\b.*")){
                         count++;
@@ -257,7 +258,7 @@ public class CellParser {
             if( hssfRow!=null && hssfRow.getFirstCellNum() >= 0 && hssfRow.getLastCellNum() >= 0 ){
                 for(short j = hssfRow.getFirstCellNum(); j <= hssfRow.getLastCellNum(); j++){
                     org.apache.poi.ss.usermodel.Cell hssfCell = hssfRow.getCell( (int)j );
-                    if( hssfCell != null && hssfCell.getCellType() == org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING ){
+                    if( hssfCell != null && hssfCell.getCellType() == CellType.STRING ){
                         String cellValue = hssfCell.getRichStringCellValue().getString();
                         if( cellValue.matches("<" + configuration.getTagPrefix() + tagName + "\\b.*")){
                             count++;

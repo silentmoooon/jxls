@@ -5,6 +5,7 @@ import net.sf.jxls.parser.Cell;
 import net.sf.jxls.parser.Expression;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.ss.usermodel.CellType;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -31,7 +32,7 @@ public class CellTransformer {
 
     void transform( Cell cell ){
         try {
-            if (cell.getPoiCell() != null && cell.getPoiCell().getCellType() == org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING) {
+            if (cell.getPoiCell() != null && cell.getPoiCell().getCellType() == CellType.STRING) {
                 if (cell.getCollectionProperty() == null) {
                     if (cell.getFormula() == null) {
                             if( cell.getExpressions().size() == 0 ){
@@ -42,7 +43,7 @@ public class CellTransformer {
                                 Object value = ((Expression) cell.getExpressions().get(0)).evaluate();
                                 if (value == null) {
                                     cell.getPoiCell().setCellValue(cell.getPoiCell().getSheet().getWorkbook().getCreationHelper().createRichTextString(""));
-                                    cell.getPoiCell().setCellType( org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK );
+                                    cell.getPoiCell().setCellType( CellType.BLANK );
                                 } else if (value instanceof Float) {
                                     cell.getPoiCell().setCellValue(((Float) value).doubleValue());
                                 }else if (value instanceof Double) {
@@ -70,7 +71,7 @@ public class CellTransformer {
                                         fixedValue = fixedValue.replaceAll("\r\n", "\n");
                                     }
                                     if( fixedValue.length() == 0 ){
-                                        cell.getPoiCell().setCellType( org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK );
+                                        cell.getPoiCell().setCellType( CellType.BLANK );
                                     }else{
                                         cell.getPoiCell().setCellValue(cell.getPoiCell().getSheet().getWorkbook().getCreationHelper().createRichTextString(fixedValue));
                                     }
@@ -115,7 +116,7 @@ public class CellTransformer {
 
     private void setCellValue(Cell cell, String value) {
         if (value == null || value.length() == 0) {
-            cell.getPoiCell().setCellType( org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK );
+            cell.getPoiCell().setCellType( CellType.BLANK );
         } else {
             cell.getPoiCell().setCellValue(cell.getPoiCell().getSheet().getWorkbook().getCreationHelper().createRichTextString(value));
         }

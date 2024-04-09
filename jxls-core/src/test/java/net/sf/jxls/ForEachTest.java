@@ -1,6 +1,5 @@
 package net.sf.jxls;
 
-import junit.framework.TestCase;
 import net.sf.jxls.bean.Department;
 import net.sf.jxls.bean.Employee;
 import net.sf.jxls.bean.Feedback;
@@ -12,16 +11,19 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.xmlbeans.impl.xb.ltgfmt.TestCase;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * @author Leonid Vysochyn
  *         Date: 12.03.2009
  */
-public class ForEachTest extends TestCase {
+public class ForEachTest   {
     protected final Log log = LogFactory.getLog(getClass());
 
     public static final String forifTag2XLS = "/templates/foriftag2.xls";
@@ -93,7 +95,6 @@ public class ForEachTest extends TestCase {
     Department mgrDepartment, itDepartment;
 
     protected void setUp() throws Exception {
-        super.setUp();
         Department department = new Department("IT");
         for(int i = 0; i < itEmployeeNames.length; i++){
             Employee employee = new Employee(itEmployeeNames[i], itAges[i], itPayments[i], itBonuses[i]);
@@ -169,7 +170,7 @@ public class ForEachTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals( sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum(),"First Row Numbers differ in source and result sheets");
 //        assertEquals("Last Row Number is incorrect", 11, resultSheet.getLastRowNum());
 
         Map props = new HashMap();
@@ -225,7 +226,7 @@ public class ForEachTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals( sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum(),"First Row Numbers differ in source and result sheets");
 
         // check 1st forEach loop output
         Map props = new HashMap();
@@ -326,7 +327,7 @@ public class ForEachTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals( sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum(),"First Row Numbers differ in source and result sheets");
 
         // check 1st forEach loop output
         Map props = new HashMap();
@@ -551,16 +552,19 @@ public class ForEachTest extends TestCase {
                 index++;
                 assertNotNull("Row must not be null", row);
                 assertEquals("Employee names are not equal", employee.getName(), row.getCell(0).getRichStringCellValue().getString());
-                assertEquals("Employee payments are not equal", employee.getPayment().doubleValue(), row.getCell(1).getNumericCellValue(), 1e-6);
-                assertEquals("Employee bonuses are not equal", employee.getBonus().doubleValue(), row.getCell(2).getNumericCellValue(), 1e-6);
+                assertEquals( employee.getPayment().doubleValue(), row.getCell(1).getNumericCellValue(), 1e-6,"Employee payments are not equal");
+                assertEquals( employee.getBonus().doubleValue(), row.getCell(2).getNumericCellValue(), 1e-6,"Employee bonuses are not equal");
             }
         }
         Row row = sheet.getRow( index );
         Employee employee = (Employee) employees.get(0);
         assertEquals("Employee names are not equal", employee.getName(), row.getCell(0).getRichStringCellValue().getString());
-        assertEquals("Employee payments are not equal", employee.getPayment().doubleValue(), row.getCell(1).getNumericCellValue(), 1e-6);
-        assertEquals("Employee bonuses are not equal", employee.getBonus().doubleValue(), row.getCell(2).getNumericCellValue(), 1e-6);
+        assertEquals( employee.getPayment().doubleValue(), row.getCell(1).getNumericCellValue(), 1e-6,"Employee payments are not equal");
+        assertEquals( employee.getBonus().doubleValue(), row.getCell(2).getNumericCellValue(), 1e-6,"Employee bonuses are not equal");
         is.close();
+    }
+
+    private void assertNotNull(String rowMustNotBeNull, Row row) {
     }
 
     private void saveWorkbook(Workbook resultWorkbook, String fileName) throws IOException {

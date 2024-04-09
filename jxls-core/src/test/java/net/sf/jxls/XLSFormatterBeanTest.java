@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.sf.jxls.bean.SimpleBean;
 import net.sf.jxls.exception.ParsePropertyException;
 import net.sf.jxls.transformer.XLSTransformer;
@@ -25,15 +24,12 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.BuiltinFormats;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 
 /**
  * @author 
  */
-public class XLSFormatterBeanTest extends TestCase {
+public class XLSFormatterBeanTest  {
     protected final Log log = LogFactory.getLog(getClass());
 
     public static final String formatterBeanXLS = "/templates/formatterbean.xls";
@@ -49,11 +45,10 @@ public class XLSFormatterBeanTest extends TestCase {
     }
 
     public XLSFormatterBeanTest(String s) {
-        super(s);
+
     }
 
     protected void setUp() throws Exception {
-        super.setUp();
         simpleBean1 = new SimpleBean("Bean 1", new Double(100.34567), new Integer(10), (Date) new Date());
         simpleBean2 = new SimpleBean("Bean 2", new Double(555.3), new Integer(123), null);
         simpleBean3 = new SimpleBean("Bean 3", new Double(777.569), new Integer(10234), new Date());
@@ -115,7 +110,6 @@ public class XLSFormatterBeanTest extends TestCase {
 		public FontVO( HSSFFont font ) {
 			fontName = font.getFontName();
 			fontHeight = font.getFontHeight();
-			boldweight = font.getBoldweight();
 			italic = font.getItalic();
 			strikeout = font.getStrikeout();
 			typeOffset = font.getTypeOffset();
@@ -149,7 +143,6 @@ public class XLSFormatterBeanTest extends TestCase {
 		public void applyTo( HSSFFont font ) {
 			font.setFontName( fontName );
 			font.setFontHeight( fontHeight );
-			font.setBoldweight( boldweight );
 			font.setItalic( italic );
 			font.setStrikeout( strikeout );
 			font.setTypeOffset( typeOffset );
@@ -165,17 +158,17 @@ public class XLSFormatterBeanTest extends TestCase {
 
 		public boolean setNext = true;
 
-		public short alignment;
-		public short borderBottom;
-		public short borderLeft;
-		public short borderRight;
-		public short borderTop;
+		public HorizontalAlignment alignment;
+		public BorderStyle borderBottom;
+		public BorderStyle borderLeft;
+		public BorderStyle borderRight;
+		public BorderStyle borderTop;
 		public short bottomBorderColor;
 		public short dataFormat;
 		public short fillBackgroundColor;
 		public short fillForegroundColor;
-		public short fillPattern;
-		public short fontIndex;
+		public FillPatternType fillPattern;
+		public int fontIndex;
 		public boolean hidden;
 		public short indention;
 		public short leftBorderColor;
@@ -183,7 +176,7 @@ public class XLSFormatterBeanTest extends TestCase {
 		public short rightBorderColor;
 		public short rotation;
 		public short topBorderColor;
-		public short verticalAlignment;
+		public VerticalAlignment verticalAlignment;
 		public boolean wrapText;
 
 		public FontVO fontVal;
@@ -302,7 +295,7 @@ public class XLSFormatterBeanTest extends TestCase {
 			return this;
 		}
 
-		public StyleVO setAlignment( short alignment ) {
+		public StyleVO setAlignment( HorizontalAlignment alignment ) {
 			if ( !this.setNext ) {
 				return this;
 			}
@@ -310,7 +303,7 @@ public class XLSFormatterBeanTest extends TestCase {
 			return this;
 		}
 
-		public StyleVO setBorderBottom( short borderBottom ) {
+		public StyleVO setBorderBottom( BorderStyle borderBottom ) {
 			if ( !this.setNext ) {
 				return this;
 			}
@@ -318,7 +311,7 @@ public class XLSFormatterBeanTest extends TestCase {
 			return this;
 		}
 
-		public StyleVO setBorderLeft( short borderLeft ) {
+		public StyleVO setBorderLeft( BorderStyle borderLeft ) {
 			if ( !this.setNext ) {
 				return this;
 			}
@@ -326,7 +319,7 @@ public class XLSFormatterBeanTest extends TestCase {
 			return this;
 		}
 
-		public StyleVO setBorderRight( short borderRight ) {
+		public StyleVO setBorderRight( BorderStyle borderRight ) {
 			if ( !this.setNext ) {
 				return this;
 			}
@@ -334,7 +327,7 @@ public class XLSFormatterBeanTest extends TestCase {
 			return this;
 		}
 
-		public StyleVO setBorderTop( short borderTop ) {
+		public StyleVO setBorderTop( BorderStyle borderTop ) {
 			if ( !this.setNext ) {
 				return this;
 			}
@@ -387,7 +380,7 @@ public class XLSFormatterBeanTest extends TestCase {
 			return this;
 		}
 
-		public StyleVO setFillPattern( short fillPattern ) {
+		public StyleVO setFillPattern( FillPatternType fillPattern ) {
 			if ( !this.setNext ) {
 				return this;
 			}
@@ -459,7 +452,7 @@ public class XLSFormatterBeanTest extends TestCase {
 			return this;
 		}
 
-		public StyleVO setVerticalAlignment( short verticalAlignment ) {
+		public StyleVO setVerticalAlignment( VerticalAlignment verticalAlignment ) {
 			if ( !this.setNext ) {
 				return this;
 			}

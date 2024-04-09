@@ -1,6 +1,5 @@
 package net.sf.jxls;
 
-import junit.framework.TestCase;
 import net.sf.jxls.tag.Block;
 import net.sf.jxls.util.TagBodyHelper;
 import org.apache.commons.logging.Log;
@@ -14,10 +13,12 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * @author Leonid Vysochyn
  */
-public class TagBodyHelperTest extends TestCase {
+public class TagBodyHelperTest  {
     protected final Log log = LogFactory.getLog(getClass());
     public static final String simpleBeanXLS = "/templates/simplebean.xls";
     public static final String simpeBeanDestXLS = "target/duplicate_output.xls";
@@ -55,7 +56,7 @@ public class TagBodyHelperTest extends TestCase {
         Block block = new Block(null, 0, 4);
         TagBodyHelper.replaceProperty( sheet, block, "mainBean.beans", "item");
 
-        assertEquals("Last Row Number is incorrect", lastRowNum, sheet.getLastRowNum());
+        assertEquals( lastRowNum, sheet.getLastRowNum());
 
         Map props = new HashMap();
         props.put( "mainBean.beans", "item");

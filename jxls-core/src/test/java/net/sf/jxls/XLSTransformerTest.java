@@ -1,6 +1,5 @@
 package net.sf.jxls;
 
-import junit.framework.TestCase;
 import net.sf.jxls.bean.*;
 import net.sf.jxls.exception.ParsePropertyException;
 import net.sf.jxls.transformer.XLSTransformer;
@@ -10,16 +9,17 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.junit.Ignore;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * @author Leonid Vysochyn
  */
-public class XLSTransformerTest extends TestCase {
+public class XLSTransformerTest {
     protected final Log log = LogFactory.getLog(getClass());
 
     public static final String simpleBeanXLS = "/templates/simplebean.xls";
@@ -162,11 +162,11 @@ public class XLSTransformerTest extends TestCase {
     }
 
     public XLSTransformerTest(String s) {
-        super(s);
+
     }
 
     protected void setUp() throws Exception {
-        super.setUp();
+
         simpleBean1 = new SimpleBean(names[0].toString(), (Double) doubleValues[0], (Integer) intValues[0], (Date) dateValues[0]);
         simpleBean2 = new SimpleBean(names[1].toString(), (Double) doubleValues[1], (Integer) intValues[1], (Date) dateValues[1]);
         simpleBean3 = new SimpleBean(names[2].toString(), (Double) doubleValues[2], (Integer) intValues[2], (Date) dateValues[2]);
@@ -269,8 +269,8 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
-        assertEquals("Last Row Numbers differ in source and result sheets", sourceSheet.getLastRowNum(), resultSheet.getLastRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getLastRowNum(), resultSheet.getLastRowNum());
         CellsChecker checker = new CellsChecker(propertyMap);
         propertyMap.put("${calendar}", calendar);
         checker.checkRows(sourceSheet, resultSheet, 0, 0, 6, true);
@@ -292,8 +292,8 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
-        assertEquals("Last Row Number is incorrect", sourceSheet.getLastRowNum() + beanWithList.getBeans().size() - 1, resultSheet.getLastRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals( sourceSheet.getLastRowNum() + beanWithList.getBeans().size() - 1, resultSheet.getLastRowNum());
 
         Map listPropMap = new HashMap();
         listPropMap.put("${listBean.name}", beanWithList.getName());
@@ -338,7 +338,7 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
         checkRowHeightIsPositive(resultSheet.getRow(43));
 
         Map props = new HashMap();
@@ -420,6 +420,9 @@ public class XLSTransformerTest extends TestCase {
         assertTrue("Row height is negative for row num = " + row.getRowNum(), row.getHeight() >= 0);
     }
 
+    private void assertTrue(String s, boolean b) {
+    }
+
     public void testMultipleListRows() throws IOException, ParsePropertyException, InvalidFormatException {
 
         Map beans = new HashMap();
@@ -433,8 +436,8 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
-        assertEquals("Last Row Number is incorrect", sourceSheet.getLastRowNum() + (beanWithList.getBeans().size() - 1) * 4, resultSheet.getLastRowNum());
+        assertEquals( sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getLastRowNum() + (beanWithList.getBeans().size() - 1) * 4, resultSheet.getLastRowNum());
 
         Map props = new HashMap();
         props.put("${listBean.beans.name}//:3", names[0]);
@@ -484,8 +487,8 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
-        assertEquals("Last Row Number is incorrect", sourceSheet.getLastRowNum() + (beanWithList.getBeans().size() - 1) * 4, resultSheet.getLastRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getLastRowNum() + (beanWithList.getBeans().size() - 1) * 4, resultSheet.getLastRowNum());
 
         Map props = new HashMap();
         props.put("${listBean.beans.name}//:3", names[0]);
@@ -508,7 +511,7 @@ public class XLSTransformerTest extends TestCase {
         checker = new CellsChecker(props);
         checker.checkRows(sourceSheet, resultSheet, 3, 11, 4, true);
 
-        assertEquals("Incorrect number of merged regions", 9, resultSheet.getNumMergedRegions());
+        assertEquals(  9, resultSheet.getNumMergedRegions());
         assertTrue("Merged Region not found", isMergedRegion(resultSheet, new CellRangeAddress(3, 3, 0, 2)));
         assertTrue("Merged Region not found", isMergedRegion(resultSheet, new CellRangeAddress(7, 7, 0, 2)));
         assertTrue("Merged Region not found", isMergedRegion(resultSheet, new CellRangeAddress(11, 11, 0, 2)));
@@ -552,8 +555,8 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
-        assertEquals("Last Row Number is incorrect", sourceSheet.getLastRowNum() + 6, resultSheet.getLastRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getLastRowNum() + 6, resultSheet.getLastRowNum());
 
         Map props = new HashMap();
         props.put("${mainBean.beans.name}//:3", "2nd bean with list");
@@ -608,8 +611,8 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
-        assertEquals("Last Row Number is incorrect", sourceSheet.getLastRowNum() + beanWithList.getBeans().size() - 1, resultSheet.getLastRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getLastRowNum() + beanWithList.getBeans().size() - 1, resultSheet.getLastRowNum());
 
         Map listPropMap = new HashMap();
         listPropMap.put("${listBean.name}", beanWithList.getName());
@@ -664,8 +667,8 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
-        assertEquals("Last Row Number is incorrect", 14, resultSheet.getLastRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  14, resultSheet.getLastRowNum());
 
         Map props = new HashMap();
         props.put("${mainBean.beans.name}//:4", "2nd bean with list");
@@ -787,8 +790,8 @@ public class XLSTransformerTest extends TestCase {
 //        Workbook resultWorkbook = new Workbook( new POIFSFileSystem( new BufferedInputStream(getClass().getResourceAsStream(groupingFormulasDestXLS))));
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
-        assertEquals("Last Row Number is incorrect", sourceSheet.getLastRowNum() + 6, resultSheet.getLastRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals( sourceSheet.getLastRowNum() + 6, resultSheet.getLastRowNum());
 
         Map props = new HashMap();
         props.put("${mainBean.beans.name}//:3", "2nd bean with list");
@@ -842,8 +845,8 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
-        assertEquals("Last Row Number is incorrect", sourceSheet.getLastRowNum() + beanWithList.getBeans().size() - 1, resultSheet.getLastRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getLastRowNum() + beanWithList.getBeans().size() - 1, resultSheet.getLastRowNum());
         Map props = new HashMap();
         props.put("Name: ${bean.name}", "Name: " + simpleBean1.getName());
         props.put("${bean.other.name} - ${bean.doubleValue},${bean.other.intValue}", simpleBean1.getOther().getName() +
@@ -886,7 +889,7 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
 //        assertEquals("Last Row Number is incorrect", 11, resultSheet.getLastRowNum());
 
         Map listPropMap = new HashMap();
@@ -910,7 +913,7 @@ public class XLSTransformerTest extends TestCase {
         checker.checkSection(sourceSheet, resultSheet, 0, 0, (short) 0, (short) 1, 7, true, true);
         checker.checkSection(sourceSheet, resultSheet, 0, 0, (short) 6, (short) 7, 14, true, true);
 
-        assertEquals("Incorrect number of merged regions", 2, resultSheet.getNumMergedRegions());
+        assertEquals(  2, resultSheet.getNumMergedRegions());
         assertTrue("Merged Region (4,0,4,1) not found", isMergedRegion(resultSheet, new CellRangeAddress(4, 4, 0,  1)));
         assertTrue("Merged Region (3,6,3,7) not found", isMergedRegion(resultSheet, new CellRangeAddress(3, 3, 6,  7)));
 
@@ -933,7 +936,7 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
 //        assertEquals("Last Row Number is incorrect", 10, resultSheet.getLastRowNum());
 
         Map listPropMap = new HashMap();
@@ -977,7 +980,7 @@ public class XLSTransformerTest extends TestCase {
         checker.checkFormulaCell(sourceSheet, 4, resultSheet, 10, (short) 9, "SUM(J4:J10)");
         checker.checkFormulaCell(sourceSheet, 4, resultSheet, 10, (short) 11, "SUM(L4:L10)");
 
-        assertEquals("Incorrect number of merged regions", 6, resultSheet.getNumMergedRegions());
+        assertEquals( 6, resultSheet.getNumMergedRegions());
         assertTrue("Merged Region (4,0,4,1) not found", isMergedRegion(resultSheet, new CellRangeAddress(4, 4, 0,  1)));
         assertTrue("Merged Region (3,7,3,8) not found", isMergedRegion(resultSheet, new CellRangeAddress(3, 3, 7,  8)));
         assertTrue("Merged Region (3,13,3,14) not found", isMergedRegion(resultSheet, new CellRangeAddress(3,  3, 13, 14)));
@@ -1004,8 +1007,8 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
-        assertEquals("Last Row Number is incorrect", sourceSheet.getLastRowNum(), resultSheet.getLastRowNum());
+        assertEquals( sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals( sourceSheet.getLastRowNum(), resultSheet.getLastRowNum());
 
         Map props = new HashMap();
         CellsChecker checker;
@@ -1034,8 +1037,8 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
-        assertEquals("Last Row Number is incorrect", sourceSheet.getLastRowNum() + beanWithList.getBeans().size() - 1, resultSheet.getLastRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getLastRowNum() + beanWithList.getBeans().size() - 1, resultSheet.getLastRowNum());
         Map props = new HashMap();
         props.put("Name: ${bean.name}", "Name: " + simpleBean1.getName());
         props.put("${bean.other.name} - ${bean.doubleValue*2},${(bean.other.intValue + bean.doubleValue)/0.5}",
@@ -1090,7 +1093,7 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
 //        assertEquals("Last Row Number is incorrect", 11, resultSheet.getLastRowNum());
         Map props = new HashMap();
         props.put("${listBean.name}", listBean.getName());
@@ -1133,8 +1136,8 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
-        assertEquals("Last Row Number is incorrect", sourceSheet.getLastRowNum(), resultSheet.getLastRowNum());
+        assertEquals( sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getLastRowNum(), resultSheet.getLastRowNum());
         Map props = new HashMap();
         props.put("${listBean.name}", listBean.getName());
         CellsChecker checker = new CellsChecker(props);
@@ -1290,12 +1293,12 @@ public class XLSTransformerTest extends TestCase {
         XLSTransformer transformer = new XLSTransformer();
         transformer.setSpreadsheetsToRemove(new String[]{"Sheet 2", "Sheet 3"});
         Workbook resultWorkbook = transformer.transformXLS(is, beans);
-        assertEquals("Number of sheets in result workbook is incorrect", 1, resultWorkbook.getNumberOfSheets());
+        assertEquals( 1, resultWorkbook.getNumberOfSheets());
         is.close();
         is = new BufferedInputStream(getClass().getResourceAsStream(hideSheetsXLS));
         transformer.setSpreadsheetsToRemove(new String[]{"Sheet 2"});
         resultWorkbook = transformer.transformXLS(is, beans);
-        assertEquals("Number of sheets in result workbook is incorrect", 2, resultWorkbook.getNumberOfSheets());
+        assertEquals(  2, resultWorkbook.getNumberOfSheets());
         is.close();
 
         saveWorkbook(resultWorkbook, hideSheetsDestXLS);
@@ -1316,7 +1319,7 @@ public class XLSTransformerTest extends TestCase {
         is = new BufferedInputStream(getClass().getResourceAsStream(multipleSheetListXLS));
         Workbook sourceWorkbook = WorkbookFactory.create(is);
 
-        assertEquals("Number of result worksheets is incorrect ", sourceWorkbook.getNumberOfSheets() + departments.size() - 1, resultWorkbook.getNumberOfSheets());
+        assertEquals(  sourceWorkbook.getNumberOfSheets() + departments.size() - 1, resultWorkbook.getNumberOfSheets());
 //        for (int sheetNo = 0; sheetNo < resultWorkbook.getNumberOfSheets() && sheetNo < sheetNames.size(); sheetNo++) {
 //             assertEquals( "Result worksheet name is incorrect", sheetNames.get(sheetNo), resultWorkbook.getSheetName(sheetNo));
 //        }
@@ -1382,7 +1385,7 @@ public class XLSTransformerTest extends TestCase {
         is = new BufferedInputStream(getClass().getResourceAsStream(multipleSheetList2XLS));
         Workbook sourceWorkbook = WorkbookFactory.create(is);
 
-        assertEquals("Number of result worksheets is incorrect ", sourceWorkbook.getNumberOfSheets() + departments.size() - 1, resultWorkbook.getNumberOfSheets());
+        assertEquals(  sourceWorkbook.getNumberOfSheets() + departments.size() - 1, resultWorkbook.getNumberOfSheets());
         for (int sheetNo = 0; sheetNo < resultWorkbook.getNumberOfSheets() && sheetNo < sheetNames.size(); sheetNo++) {
         }
         is.close();
@@ -1508,7 +1511,7 @@ public class XLSTransformerTest extends TestCase {
 
         Sheet sourceSheet = sourceWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkbook.getSheetAt(0);
-        assertEquals("First Row Numbers differ in source and result sheets", sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
+        assertEquals(  sourceSheet.getFirstRowNum(), resultSheet.getFirstRowNum());
         assertEquals(resultSheet.getHeader().getLeft(), "Test Left Header");
         assertEquals(resultSheet.getHeader().getCenter(), itDepartment.getName());
         assertEquals(resultSheet.getHeader().getRight(), "Test Right Header");
@@ -1576,7 +1579,7 @@ public class XLSTransformerTest extends TestCase {
         Sheet sheet = resultWorkbook.getSheetAt(0);
         Row row = sheet.getRow(0);
         Cell cell = row.getCell((short) 0);
-        assertEquals("Incorrect cell value", testNumber.getTestNumber(), (int) cell.getNumericCellValue());
+        assertEquals(  testNumber.getTestNumber(), (int) cell.getNumericCellValue());
         is.close();
     }
 

@@ -1,28 +1,21 @@
 package net.sf.jxls;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import net.sf.jxls.report.ReportManager;
+import net.sf.jxls.report.ReportManagerImpl;
+import net.sf.jxls.transformer.XLSTransformer;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Workbook;
+
+import java.io.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
-import net.sf.jxls.report.ReportManager;
-import net.sf.jxls.report.ReportManagerImpl;
-import net.sf.jxls.transformer.XLSTransformer;
-
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Workbook;
-
 /**
  * @author Leonid Vysochyn
  */
-public class SQLReportingTest extends TestCase {
+public class SQLReportingTest  {
 
     public static final String report = "/templates/report.xls";
     public static final String reportTimestamp = "/templates/reportTimestamp.xls";

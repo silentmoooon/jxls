@@ -1,14 +1,16 @@
 package net.sf.jxls;
 
-import junit.framework.TestCase;
 import net.sf.jxls.tag.Block;
 import net.sf.jxls.transformation.ShiftTransformation;
 import net.sf.jxls.transformer.Sheet;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * @author Leonid Vysochyn
  */
-public class ShiftTransformationTest extends TestCase {
+public class ShiftTransformationTest  {
     public void testEqualsTrue(){
         Sheet sheet = new Sheet();
         sheet.setSheetName( "Sheet 1");

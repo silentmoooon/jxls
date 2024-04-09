@@ -4,6 +4,7 @@ import net.sf.jxls.formula.Formula;
 import net.sf.jxls.tag.Tag;
 import net.sf.jxls.transformer.Row;
 import net.sf.jxls.transformer.RowCollection;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellReference;
 
@@ -154,7 +155,7 @@ public class Cell {
     }
 
     private void figureEmpty() {
-        empty = getPoiCellValue() == null || getPoiCellValue().length() == 0 || getPoiCell().getCellType() == org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK;
+        empty = getPoiCellValue() == null || getPoiCellValue().length() == 0 || getPoiCell().getCellType() == CellType.BLANK;
     }
 
     public boolean isEmpty() {

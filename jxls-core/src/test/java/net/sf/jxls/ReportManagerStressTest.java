@@ -1,6 +1,5 @@
 package net.sf.jxls;
 
-import junit.framework.TestCase;
 import net.sf.jxls.report.ReportManager;
 import net.sf.jxls.report.ReportManagerImpl;
 import net.sf.jxls.transformer.XLSTransformer;
@@ -18,7 +17,7 @@ import java.util.Random;
 /**
  * @author Leonid Vysochyn
  */
-public class ReportManagerStressTest extends TestCase {
+public class ReportManagerStressTest   {
 
     protected final Log log = LogFactory.getLog(getClass());
 
@@ -67,7 +66,7 @@ public class ReportManagerStressTest extends TestCase {
     Connection conn;
 
     protected void setUp() throws Exception {
-        super.setUp();
+
     }
 
     private String generateEmployeeName(Random r, int max) {

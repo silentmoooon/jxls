@@ -1,11 +1,11 @@
 package net.sf.jxls;
 
-import junit.framework.TestCase;
 import net.sf.jxls.bean.Department;
 import net.sf.jxls.bean.Employee;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.xmlbeans.impl.xb.ltgfmt.TestCase;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
@@ -18,7 +18,7 @@ import java.util.Random;
 /**
 * @author Leonid Vysochyn
 */
-public abstract class BaseTest extends TestCase {
+public abstract class BaseTest  {
     protected final Log log = LogFactory.getLog(getClass());
 
     List itEmployees = new ArrayList();
@@ -44,7 +44,6 @@ public abstract class BaseTest extends TestCase {
     Department mgrDepartment, itDepartment;
 
     protected void setUp() throws Exception {
-        super.setUp();
         Department department = new Department("IT");
         for(int i = 0; i < itEmployeeNames.length; i++){
             Employee employee = new Employee(itEmployeeNames[i], itAges[i], itPayments[i], itBonuses[i]);

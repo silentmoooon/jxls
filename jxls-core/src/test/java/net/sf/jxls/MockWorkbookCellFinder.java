@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.jxls.controller.WorkbookCellFinderImpl;
+import org.apache.poi.ss.util.CellReference;
 
-import org.apache.poi.hssf.util.CellReference;
 
 /**
  * @author Leonid Vysochyn

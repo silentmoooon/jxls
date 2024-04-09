@@ -1,6 +1,5 @@
 package net.sf.jxls;
 
-import junit.framework.TestCase;
 import net.sf.jxls.controller.SheetTransformationController;
 import net.sf.jxls.controller.SheetTransformationControllerImpl;
 import net.sf.jxls.tag.Block;
@@ -19,10 +18,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * @author Leonid Vysochyn
  */
-public class SheetTransformationControllerTest extends TestCase {
+public class SheetTransformationControllerTest  {
     protected final Log log = LogFactory.getLog(getClass());
     public static final String simpleBeanXLS = "/templates/simplebean.xls";
     public static final String duplicateOutputXLS = "target/duplicate_output.xls";
@@ -55,7 +56,7 @@ public class SheetTransformationControllerTest extends TestCase {
 //        checker.checkRows(srcSheet, srcSheet, 4, 10, 1);
         // checking transformations
         List transformations = stc.getTransformations();
-        assertEquals( "Number of transformations is incorrect", 2, transformations.size() );
+        assertEquals(  2, transformations.size(),"Number of transformations is incorrect" );
         List expectedTransformations = new ArrayList();
         expectedTransformations.add( new ShiftTransformation( new Block(sheet, 4, Integer.MAX_VALUE), 6, 0));
         expectedTransformations.add( new DuplicateTransformation( new Block(sheet, 1, 3), 2));
@@ -63,7 +64,7 @@ public class SheetTransformationControllerTest extends TestCase {
         for( int i = 0; i < 2; i++ ){
             Object bt = transformations.get( i );
             Object ebt = expectedTransformations.get( i );
-            assertEquals( "Transformation is incorrect", ebt, bt);
+            assertEquals(  ebt, bt,"Transformation is incorrect");
         }
 
         OutputStream os = new BufferedOutputStream(new FileOutputStream(duplicateOutputXLS));
@@ -97,7 +98,7 @@ public class SheetTransformationControllerTest extends TestCase {
         checker.checkRows(srcSheet, destSheet, 4, 2, 1, true);
         // checking transformations
         List transformations = stc.getTransformations();
-        assertEquals( "Number of transformations is incorrect", 4, transformations.size() );
+        assertEquals(  4, transformations.size(),"Number of transformations is incorrect" );
         List expectedTransformations = new ArrayList();
         expectedTransformations.add( new RemoveTransformation( new Block(sheet, 1, 1) ));
         expectedTransformations.add( new ShiftTransformation( new Block(sheet, 2, Integer.MAX_VALUE), -1, 0) );
@@ -109,7 +110,7 @@ public class SheetTransformationControllerTest extends TestCase {
         for( int i = 0; i < 2; i++ ){
             Object bt = transformations.get( i );
             Object ebt = expectedTransformations.get( i );
-            assertEquals( "Transformation is incorrect", ebt, bt);
+            assertEquals( ebt, bt, "Transformation is incorrect");
         }
 
         OutputStream os = new BufferedOutputStream(new FileOutputStream(removeBordersOutputXLS));
@@ -143,7 +144,7 @@ public class SheetTransformationControllerTest extends TestCase {
 //        checker.checkRows(srcSheet, srcSheet, 4, 10, 1);
         // checking transformations
         List transformations = stc.getTransformations();
-        assertEquals( "Number of transformations is incorrect", 2, transformations.size() );
+        assertEquals(  2, transformations.size(),"Number of transformations is incorrect" );
         List expectedTransformations = new ArrayList();
         expectedTransformations.add( new RemoveTransformation( new Block(sheet, 1, 3) ));
         expectedTransformations.add( new ShiftTransformation( new Block(sheet, 4, Integer.MAX_VALUE), -3, 0) );
@@ -153,7 +154,7 @@ public class SheetTransformationControllerTest extends TestCase {
         for( int i = 0; i < 2; i++ ){
             Object bt = transformations.get( i );
             Object ebt = expectedTransformations.get( i );
-            assertEquals( "Transformation is incorrect", ebt, bt);
+            assertEquals(  ebt, bt,"Transformation is incorrect");
         }
 
         OutputStream os = new BufferedOutputStream(new FileOutputStream(removeBodyRowsXLS));

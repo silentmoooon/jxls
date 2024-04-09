@@ -1,12 +1,14 @@
 package net.sf.jxls;
 
-import junit.framework.TestCase;
 import net.sf.jxls.tag.Block;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Leonid Vysochyn
  */
-public class BlockTest extends TestCase {
+public class BlockTest   {
     public void testEquals(){
         Block b1 = new Block(1, (short) 2, 3, (short)4);
         Block b2 = new Block(1, (short) 2, 3, (short)4);

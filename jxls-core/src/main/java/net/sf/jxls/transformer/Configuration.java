@@ -8,8 +8,8 @@ import java.util.Set;
 
 import net.sf.jxls.tag.JxTaglib;
 import net.sf.jxls.tag.TagLib;
+import org.apache.commons.digester3.Digester;
 
-import org.apache.commons.digester.Digester;
 
 /**
  * Defines configuration properties for XLS transformation

@@ -3,8 +3,8 @@ package net.sf.jxls;
 import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class RepeatedFormulaTest {
 
     private FooSampleReportBean report;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         createSample();
     }
